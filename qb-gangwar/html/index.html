@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evento PvP</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+        }
+        h1 {
+            font-size: 24px;
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 5px 0;
+            text-align: center;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Estadísticas PvP</h1>
+        <ul id="player-list">
+            <!-- Los participantes y sus muertes aparecerán aquí -->
+        </ul>
+    </div>
+
+    <script>
+        window.addEventListener('message', function(event) {
+            const data = event.data;
+            if (data.type === 'updateStats') {
+                const playerList = document.getElementById('player-list');
+                playerList.innerHTML = ''; // Limpiar la lista
+
+                data.players.forEach(function(player) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${player.name} - Muertes: ${player.deaths}`;
+                    playerList.appendChild(listItem);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
